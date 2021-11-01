@@ -5,13 +5,18 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">3.7,<3.9"
 fastapi-users = {extras = ["sqlalchemy"], version = "^8.1.1"}
 uvicorn = "^0.15.0"
+py-bus = "^0.2.0"
+sqlmodel = "^0.0.4"
+PyMySQL = "^1.0.2"
+cryptography = "^35.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
 aiosqlite = "^0.17.0"
+pytest = "^6.2.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
