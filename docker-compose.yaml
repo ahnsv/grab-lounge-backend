@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+  reservation:
+    build: .
+    environment:
+      DB_URL: mysql+pymysql://test:test@db:3306/test
+    restart: always
+    command:
+      - sh
+      - -c
+      - uvicorn src.reservation.presentation.fastapi.app:create_app --port 3000 --host 0.0.0.0
+    ports:
+      - "3000:3000"
+
+  user:
+    build: .
+    environment:
+      DB_URL: mysql+pymysql://test:test@db:3306/test
+    restart: always
+    command:
+      - sh
+      - -c
+      - uvicorn src.user.app:app --port 3000 --host 0.0.0.0
+    ports:
+      - "3001:3000"
