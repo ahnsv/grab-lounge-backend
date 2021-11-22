@@ -2,8 +2,15 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from src.reservation.domain.commands import CreateReservation, ModifyReservation, DeleteReservation
-from src.reservation.presentation.fastapi.schema import NewReservationIn, UpdateReservationIn
+from src.reservation.domain.commands import (
+    CreateReservation,
+    ModifyReservation,
+    DeleteReservation,
+)
+from src.reservation.presentation.fastapi.schema import (
+    NewReservationIn,
+    UpdateReservationIn,
+)
 from src.reservation.service.messagebus import messagebus
 
 router = APIRouter()

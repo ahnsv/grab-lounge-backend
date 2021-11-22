@@ -11,27 +11,41 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
+    networks:
+      - grab_lounge
 
   reservation:
     build: .
     environment:
       DB_URL: mysql+pymysql://test:test@db:3306/test
+      USER_SERVICE_URL: http://user:3000
     restart: always
+    volumes:
+      - ./src/reservation:/app/src/reservation
     command:
       - sh
       - -c
-      - uvicorn src.reservation.presentation.fastapi.app:create_app --port 3000 --host 0.0.0.0
+      - uvicorn src.reservation.presentation.fastapi.app:create_app --port 3000 --host 0.0.0.0 --reload
     ports:
       - "3000:3000"
+    networks:
+      - grab_lounge
 
   user:
     build: .
     environment:
       DB_URL: mysql+pymysql://test:test@db:3306/test
     restart: always
+    volumes:
+      - ./src/user:/app/src/user
     command:
       - sh
       - -c
-      - uvicorn src.user.app:app --port 3000 --host 0.0.0.0
+      - uvicorn src.user.app:app --port 3000 --host 0.0.0.0 --reload
     ports:
       - "3001:3000"
+    networks:
+      - grab_lounge
+
+networks:
+  grab_lounge:

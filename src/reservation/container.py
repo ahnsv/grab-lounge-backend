@@ -1,6 +1,8 @@
+import httpx
 from dependency_injector import containers, providers
 from sqlmodel import create_engine, Session, SQLModel
 
+from src.reservation.adapter.http_client import UserServiceHTTPClient
 from src.reservation.adapter.repository import ORMRepository
 
 
@@ -21,4 +23,5 @@ class Container(containers.DeclarativeContainer):
     session = providers.Singleton(Session, engine)
     database = providers.Singleton(Database, engine)
     repo = providers.Factory(ORMRepository, session)
-
+    client = providers.Factory(httpx.Client, base_url=config.user_service_url)
+    http_client = providers.Factory(UserServiceHTTPClient, client=client)

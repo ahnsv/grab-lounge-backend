@@ -20,6 +20,7 @@ class CreateReservation(BaseCommand):
 
 class ModifyReservation(CreateReservation):
     reservation_id: int
+    status: int
 
 
 class DeleteReservation(BaseCommand):

@@ -4,7 +4,11 @@ from datetime import datetime
 from sqlmodel import create_engine, SQLModel, Session
 
 from src.reservation.adapter.repository import ORMRepository
-from src.reservation.domain.commands import CreateReservation, ModifyReservation, DeleteReservation
+from src.reservation.domain.commands import (
+    CreateReservation,
+    ModifyReservation,
+    DeleteReservation,
+)
 from src.reservation.service import handlers
 
 
@@ -20,15 +24,24 @@ def repository() -> ORMRepository:
 
 
 def test_create_reservation(repository):
-    cmd = CreateReservation(start_at=datetime(2021, 11, 1, 0, 0, 0), end_at=datetime(2021, 11, 1, 1, 0, 0),
-                            created_by=uuid.uuid4(), name="TEST_RESERVATION")
+    cmd = CreateReservation(
+        start_at=datetime(2021, 11, 1, 0, 0, 0),
+        end_at=datetime(2021, 11, 1, 1, 0, 0),
+        created_by=uuid.uuid4(),
+        name="TEST_RESERVATION",
+    )
     result = handlers.create_reservation(cmd=cmd, repo=repository)
     assert isinstance(result, int) is True
 
 
 def test_modify_reservation(repository):
-    cmd = ModifyReservation(start_at=datetime(2021, 11, 1, 0, 0, 0), end_at=datetime(2021, 11, 1, 2, 0, 0),
-                            created_by=uuid.uuid4(), name="TEST_RESERVATION_v2", reservation_id=1)
+    cmd = ModifyReservation(
+        start_at=datetime(2021, 11, 1, 0, 0, 0),
+        end_at=datetime(2021, 11, 1, 2, 0, 0),
+        created_by=uuid.uuid4(),
+        name="TEST_RESERVATION_v2",
+        reservation_id=1,
+    )
     result = handlers.modify_reservation(cmd=cmd, repo=repository)
     assert isinstance(result.id, int) is True
 

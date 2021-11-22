@@ -4,6 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from src.reservation.domain.models import ReservationStatus
+
 
 class BaseSchema(BaseModel):
     pass
@@ -18,4 +20,4 @@ class NewReservationIn(BaseSchema):
 
 
 class UpdateReservationIn(NewReservationIn):
-    pass
+    status: ReservationStatus
